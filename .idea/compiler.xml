@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Annotation profile for parent" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.30/lombok-1.18.30.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct-processor/1.5.5.Final/mapstruct-processor-1.5.5.Final.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct/1.5.5.Final/mapstruct-1.5.5.Final.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/springframework/boot/spring-boot-configuration-processor/3.0.0/spring-boot-configuration-processor-3.0.0.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/hibernate/orm/hibernate-jpamodelgen/6.2.9.Final/hibernate-jpamodelgen-6.2.9.Final.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/jboss/logging/jboss-logging/3.5.0.Final/jboss-logging-3.5.0.Final.jar" />
+          <entry name="$MAVEN_REPOSITORY$/jakarta/xml/bind/jakarta.xml.bind-api/4.0.0/jakarta.xml.bind-api-4.0.0.jar" />
+          <entry name="$MAVEN_REPOSITORY$/jakarta/activation/jakarta.activation-api/2.1.0/jakarta.activation-api-2.1.0.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/glassfish/jaxb/jaxb-runtime/4.0.2/jaxb-runtime-4.0.2.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/glassfish/jaxb/jaxb-core/4.0.2/jaxb-core-4.0.2.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/eclipse/angus/angus-activation/2.0.0/angus-activation-2.0.0.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/glassfish/jaxb/txw2/4.0.2/txw2-4.0.2.jar" />
+          <entry name="$MAVEN_REPOSITORY$/com/sun/istack/istack-commons-runtime/4.1.1/istack-commons-runtime-4.1.1.jar" />
+        </processorPath>
+        <module name="application" />
+        <module name="rest-api" />
+        <module name="persistence" />
+      </profile>
+    </annotationProcessing>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="application" options="-parameters" />
+      <module name="parent" options="-parameters" />
+      <module name="persistence" options="-parameters" />
+      <module name="rest-api" options="-parameters" />
+    </option>
+  </component>
+</project>

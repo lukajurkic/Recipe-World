@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div><th:block th:replace="fragments/head :: genericHead"></th:block></div>
+
+<body class="d-flex flex-column min-vh-100 col-md-8 mx-auto">
+<div th:replace="fragments/header :: header"></div>
+
+<div class="col-md-4 mx-auto mb-3">
+    <p class="h4 mb-4">Update User Information</p>
+    <form th:action="@{/users/update}" th:object="${user}" method="post">
+        <div class="mb-3">
+            <label for="firstNameInput" class="form-label">First name</label>
+            <input type="text" class="form-control" id="firstNameInput" th:field="*{firstName}">
+            <p th:if="${#fields.hasErrors('firstName')}" th:errorclass="error" th:errors="*{firstName}"></p>
+        </div>
+        <div class="mb-3">
+            <label for="lastNameInput" class="form-label">Last name</label>
+            <input type="text" class="form-control" id="lastNameInput" th:field="*{lastName}">
+            <p th:if="${#fields.hasErrors('lastName')}" th:errorclass="error" th:errors="*{lastName}"></p>
+        </div>
+        <div class="mb-3">
+            <label for="dateOfBirthInput" class="form-label">Date of birth</label>
+            <input type="date" class="form-control" id="dateOfBirthInput" th:field="*{dateOfBirth}">
+            <p th:if="${#fields.hasErrors('dateOfBirth')}" th:class="${#fields.hasErrors('dateOfBirth')}? error">Date of birth is required. Must be in the past.</p>
+        </div>
+        <div class="mb-3">
+            <label for="inputUsername" class="form-label">Username</label>
+            <input type="text" class="form-control" id="inputUsername" aria-describedby="usernameInfo" th:field="*{username}">
+            <div id="usernameInfo" class="form-text">Your username must be unique</div>
+            <p th:if="${#fields.hasErrors('username')}" th:errorclass="error" th:errors="*{username}"></p>
+        </div>
+        <div class="mb-3">
+            <label for="inputPassword5" class="form-label">Password</label>
+            <input type="password" id="inputPassword5" class="form-control" aria-describedby="passwordHelpBlock" th:field="*{password}">
+            <div id="passwordHelpBlock" class="form-text">For any user information update, please enter your password</div>
+            <p th:if="${#fields.hasErrors('password')}" th:errorclass="error" th:errors="*{password}"></p>
+        </div>
+        <button type="submit" class="btn btn-primary mx-auto">Update</button>
+    </form>
+    <br>
+    <hr>
+    <div class="mb-3">
+        <label for="roleInformation" class="form-label">Your authorities:</label>
+        <p class="h5 mb-4" id="roleInformation" th:text="${userRole}"/>
+    </div>
+    <div th:if="${!#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
+        <p><i>Note: for authorities promotion contact admin</i></p>
+    </div>
+    <form th:action="@{/users/downgrade}" method="post"
+          th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
+        <button type="submit" class="btn btn-primary mx-auto">Downgrade rights</button>
+    </form>
+    <hr>
+    <div>
+        <h3 th:text="'Number of comments: ' + ${comments.size()}"></h3>
+        <div th:each="comment: ${comments}">
+            <div class="d-flex justify-content-between align-items-center">
+                <h5 th:text="${comment.title}"/>
+                <p th:text="${comment.recipeName}"/>
+            </div>
+            <p th:text="${comment.text}"/>
+        </div>
+        <hr>
+    </div>
+    <div class=" d-flex align-items-center justify-content-center">
+        <a th:href="@{/users/delete}" class="btn btn-danger mx-auto">Delete account</a>
+    </div>
+</div>
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>

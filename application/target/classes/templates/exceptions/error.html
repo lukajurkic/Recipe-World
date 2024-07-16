@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div><th:block th:replace="fragments/head :: genericHead"></th:block></div>
+
+<body class="d-flex flex-column min-vh-100 col-md-8 mx-auto">
+<div th:replace="fragments/header :: header"></div>
+<div class="text-center">
+  <p>Http Status</p>
+  <h1 th:text="${httpStatus}"></h1>
+  <br>
+  <br>
+  <p>Error</p>
+  <h3 th:text="${errorMessage}"></h3>
+
+</div>
+
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>

@@ -1,0 +1,51 @@
+# ================================== #
+#       DO NOT MODIFY THIS FILE      #
+# ================================== #
+server:
+  port: 8080
+  tomcat:
+    max-swallow-size: -1
+
+logging:
+  level:
+    root: info
+    org.springframework.security: DEBUG
+
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    driver-class-name: org.postgresql.Driver
+    username: root
+    password: root
+
+  flyway:
+    schemas: recipes_ferit
+    locations: classpath:db/migration
+
+  jpa:
+    open-in-view: false
+    database: postgresql
+    properties:
+      jakarta:
+        persistence:
+          schema-generation:
+            database:
+              action: validate
+      hibernate:
+        default_schema: recipes_ferit
+        jdbc:
+          time_zone: UTC
+
+  jackson:
+    serialization:
+      write_dates_as_timestamps: false
+
+  sql:
+    init:
+      platform: postgres
+
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB

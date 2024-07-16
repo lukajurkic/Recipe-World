@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div><th:block th:replace="fragments/head :: genericHead"></th:block></div>
+
+<body class="d-flex flex-column min-vh-100 col-md-8 mx-auto">
+<div th:replace="fragments/header :: header"></div>
+
+<div class="col-md-4 mx-auto">
+    <h3 th:text="'Update \'' + ${recipeName} + '\''" class="text-center"/>
+    <form th:action="@{/recipes/update}" th:object="${request}" method="post">
+        <input type="hidden" name="recipeId" th:value="${recipeId}">
+        <div class="mb-3">
+            <label for="nameInput" class="form-label">Name</label>
+            <input type="text" class="form-control" id="nameInput" th:field="*{name}">
+            <p th:if="${#fields.hasErrors('name')}" th:errorclass="error" th:errors="*{name}"></p>
+
+        </div>
+        <button type="submit" class="btn btn-primary mx-auto">Save</button>
+    </form>
+</div>
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>

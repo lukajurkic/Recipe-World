@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div><th:block th:replace="fragments/head :: genericHead"></th:block></div>
+
+<body class="d-flex flex-column min-vh-100 col-md-8 mx-auto">
+<div th:replace="fragments/header :: header"></div>
+
+<div class="col-md-4 mx-auto mb-3">
+    <h2 class="text-center" th:text="'Upload Recipe Image to \'' + ${recipe.name} + '\''"/>
+    <br>
+    <form action="#" method="post" th:object="${request}" th:action="@{/recipes/upload}" enctype="multipart/form-data">
+        <div class="form-group">
+            <input type="file" name="image" accept="image/*" class="form-control-file">
+        </div>
+        <p th:if="${#fields.hasErrors('pictureData')}" th:errorclass="error" th:errors="*{pictureData}"></p>
+        <br>
+        <input type="hidden" name="recipeId" th:value="${recipe.id}">
+        <label for="description">Image description:</label>
+        <textarea id="description" th:field="*{description}" rows="4" cols="50" class="mb-3"></textarea>
+        <button type="submit" class="btn btn-primary">Upload image</button>
+    </form>
+</div>
+
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>

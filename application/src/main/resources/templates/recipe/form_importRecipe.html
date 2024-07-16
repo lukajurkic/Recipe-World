@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div><th:block th:replace="fragments/head :: genericHead"></th:block></div>
+
+<body class="d-flex flex-column min-vh-100 col-md-8 mx-auto">
+<div th:replace="fragments/header :: header"></div>
+
+<div class="col-md-4 mx-auto mb-3">
+  <h1 class="text-center mb-3">Import Recipe</h1>
+  <form th:action="@{/recipes/import}" method="post">
+    <div class="mb-3">
+      <label for="recipeNameToImport" class="form-label">Recipe name to import</label>
+      <input type="text" class="form-control" id="recipeNameToImport" name="recipeNameToImport" placeholder="recipe name">
+    </div>
+    <br>
+    <p><i>Note: After selecting and adding recipe to your account, you can edit it.</i></p>
+    <br>
+    <button type="submit" class="btn btn-primary mx-auto">Import</button>
+  </form>
+
+  <div th:unless="${importedRecipes.empty}">
+    <br>
+    <br>
+    <div class="accordion" id="accordionPanelsStayOpenExample">
+      <div class="accordion-item" th:each="importedRecipe, iStat: ${importedRecipes}">
+        <h2 class="accordion-header" th:id="'panelsStayOpen-heading' + ${iStat.index}">
+          <button class="accordion-button" type="button" data-bs-toggle="collapse" th:data-bs-target="'#panelsStayOpen-collapse' + ${iStat.index}" aria-expanded="true" th:aria-controls="'panelsStayOpen-collapse' + ${iStat.index}" th:text="${importedRecipe.name}">
+          </button>
+        </h2>
+        <div th:id="'panelsStayOpen-collapse' + ${iStat.index}" class="accordion-collapse collapse" th:aria-labelledby="'panelsStayOpen-heading' + ${iStat.index}">
+          <div class="accordion-body imported-recipe-body">
+            <h3 class="mt-5">Ingredients:</h3>
+            <ul th:each="ingredient : ${importedRecipe.getImportedIngredients()}">
+              <li th:text="${ingredient.name} + ' - ' + ${ingredient.amount} + ' ' + ${ingredient.unit}"/>
+            </ul>
+
+            <h3 class="mt-5">Steps and other info:</h3>
+            <ul class="list-group-flush" th:each="step : ${importedRecipe.getImportedSteps()}">
+              <li class="list-group-item" th:text="${step.number} + '. ' + ${step.description}"/>
+            </ul>
+            <form th:action="@{/recipes/select}" method="post">
+              <input type="hidden" name="listIndex" th:value="${iStat.index}">
+              <input type="hidden" name="recipeNameToImport" th:value="${recipeNameToImport}">
+              <input type="submit" class="btn btn-primary mx-auto" value="Select"/>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>

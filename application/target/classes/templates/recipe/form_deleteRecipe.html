@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div><th:block th:replace="fragments/head :: genericHead"></th:block></div>
+
+<body class="d-flex flex-column min-vh-100 col-md-8 mx-auto">
+<div th:replace="fragments/header :: header"></div>
+
+<div class="col-md-4 mx-auto mb-3">
+    <h1 th:text="'Do you want to delete \'' + ${recipe.name} + '\''"/>
+    <p><i>Note: All images and comments associated with this recipe will be deleted</i></p>
+    <form th:action="@{/recipes/delete}" method="post">
+        <input th:name="recipeId" th:value="${recipe.id}" type="hidden">
+        <input type="submit" class="btn btn-danger" value="Confirm">
+        <a th:href="@{/recipes/all}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>

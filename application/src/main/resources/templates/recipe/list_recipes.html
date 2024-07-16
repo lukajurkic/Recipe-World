@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div><th:block th:replace="fragments/head :: genericHead"></th:block></div>
+
+<body class="d-flex flex-column min-vh-100 col-md-8 mx-auto">
+<div th:replace="fragments/header :: header"></div>
+<h1 class="text-center mb-3" th:text="'Recipes (' + ${recipes.size()} + ')'"/>
+
+<table class="table table-dark table-bordered table-hover">
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th th:if="${#authorization.expression('isAuthenticated()')}">
+            Actions
+        </th>
+        <th th:if="${#authorization.expression('isAuthenticated()')}">
+            Ingredients
+        </th>
+        <th th:if="${#authorization.expression('isAuthenticated()')}">
+            Steps
+        </th>
+        <th>Images</th>
+        <th>See Details</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr th:each="recipe : ${recipes}">
+
+        <td th:text="${recipe.id}" />
+        <td th:text="${recipe.name}" />
+        <td th:if="${#authorization.expression('isAuthenticated()')}">
+            <form th:action="@{/recipes/delete}" method="get">
+                <input type="hidden" name="recipeId" th:value="${recipe.id}">
+                <input type="submit" value="Delete" class="btn btn-primary btn-sm mb-3"/>
+            </form>
+            <form th:action="@{/recipes/update}" method="get">
+                <input type="hidden" name="recipeId" th:value="${recipe.id}">
+                <input type="submit" value="Update" class="btn btn-primary btn-sm mb-3"/>
+            </form>
+        </td>
+        <td th:if="${#authorization.expression('isAuthenticated()')}">
+            <form th:action="@{/recipe/ingredients/all}" method="get">
+                <input type="hidden" name="recipeName" th:value="${recipe.name}">
+                <input type="submit" value="Manage" class="btn btn-primary btn-sm mb-3"/>
+            </form>
+        </td>
+        <td th:if="${#authorization.expression('isAuthenticated()')}">
+            <form th:action="@{/steps}" method="get">
+                <input type="hidden" name="recipeName" th:value="${recipe.name}">
+                <input type="submit" value="Step Details" class="btn btn-primary btn-sm mb-3"/>
+            </form>
+        </td>
+        <td>
+            <form action="#" th:action="@{/recipes/upload}" method="get">
+                <input type="hidden" name="recipeId" th:value="${recipe.id}">
+                <button type="submit" class="btn btn-primary btn-sm mb-3">Upload</button>
+            </form>
+            <form action="#" th:action="@{/recipes/images/delete}" method="get">
+                <input type="hidden" name="recipeId" th:value="${recipe.id}">
+                <button type="submit" class="btn btn-primary btn-sm mb-3">Delete</button>
+            </form>
+        </td>
+        <td>
+            <form th:action="@{/recipes}" method="get">
+                <input type="hidden" name="recipeName" th:value="${recipe.name}">
+                <input type="submit" value="Details" class="btn btn-primary btn-sm mb-3"/>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>

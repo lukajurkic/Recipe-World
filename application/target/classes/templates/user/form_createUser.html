@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div><th:block th:replace="fragments/head :: genericHead"></th:block></div>
+
+<body class="d-flex flex-column min-vh-100 col-md-8 mx-auto">
+<div th:replace="fragments/header :: header"></div>
+
+<div class="col-md-4 mx-auto container d-flex align-items-center justify-content-center mb-3">
+    <div id="loginbox" style="margin-top: 50px;">
+        <div class="card border-info">
+            <div class="card-header bg-info">
+                Sign Up
+            </div>
+
+            <div class="card-body sign-form">
+                <div class="card-text">
+
+                    <!-- Login Form -->
+                    <form action="#" th:action="@{/users/create}" th:object="${request}" method="POST" class="form-horizontal">
+
+                        <!-- First name -->
+                        <div class="mb-3">
+                            <div class="input-group">
+                                <label>
+                                    <input type="text" class="form-control" placeholder="first name" th:field="*{firstName}">
+                                </label>
+                            </div>
+                            <div th:if="${#fields.hasErrors('firstName')}">
+                                <p th:errorclass="error" th:errors="*{firstName}"></p>
+                            </div>
+                        </div>
+
+                        <!-- Last name -->
+                        <div class="mb-3">
+                            <div class="input-group">
+                                <label>
+                                    <input type="text" class="form-control" placeholder="last name" th:field="*{lastName}">
+                                </label>
+                            </div>
+                            <div th:if="${#fields.hasErrors('lastName')}">
+                                <p th:errorclass="error" th:errors="*{lastName}"></p>
+                            </div>
+                        </div>
+
+                        <!-- Date of birth -->
+                        <div class="mb-3">
+                            <div class="input-group">
+                                <label>Date of birth
+                                    <input type="date" class="form-control" th:field="*{dateOfBirth}">
+                                </label>
+                            </div>
+                            <p th:if="${#fields.hasErrors('dateOfBirth')}" th:class="${#fields.hasErrors('dateOfBirth')}? error">Date of birth is required. Must be in the past.</p>
+                        </div>
+
+                        <!-- Username -->
+                        <div class="mb-3">
+                            <div class="input-group">
+                                <label>
+                                    <input type="text" class="form-control" placeholder="username" th:field="*{username}">
+                                </label>
+                            </div>
+                            <div th:if="${#fields.hasErrors('username')}">
+                                <p th:errorclass="error" th:errors="*{username}"></p>
+                            </div>
+                        </div>
+
+                        <!-- Password -->
+                        <div class="mb-3">
+                            <div class="input-group">
+                                <label>
+                                    <input type="password" class="form-control" placeholder="password" aria-describedby="passwordHelpBlock" th:field="*{password}">
+                                </label>
+                            </div>
+                            <div id="passwordHelpBlock" class="form-text">
+                                Your password must be 8-20 characters long, contain letters and numbers, and must not contain spaces, special characters, or emoji.
+                            </div>
+                            <div th:if="${#fields.hasErrors('password')}">
+                                <p th:errorclass="error" th:errors="*{password}"></p>
+                            </div>
+                        </div>
+
+                        <!-- Login/Submit Button -->
+                        <div style="margin-top: 10px;" class="form-group">
+                            <div class="col-sm-6 controls">
+                                <button type="submit" class="btn btn-success">Create</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div><th:block th:replace="fragments/head :: genericHead"></th:block></div>
+
+<body class="d-flex flex-column min-vh-100 col-md-8 mx-auto col-md-8 mx-auto">
+<div th:replace="fragments/header :: header"></div>
+
+<h1 th:text="${ingredient.name} + '(id:' + ${ingredient.id} + ')'"/>
+<p th:text="'category: ' + ${ingredient.category}"/>
+<div th:each="image: ${images}" style="max-width: 300px">
+    <img class="mw-100 h-auto" th:src="@{'data:image/jpeg;charset=utf-8;base64,' + ${image}}" alt="">
+</div>
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>

@@ -1,0 +1,4 @@
+# This is configuration override file
+# For additional changes add property overrides here
+
+db-schema: recipes_ferit

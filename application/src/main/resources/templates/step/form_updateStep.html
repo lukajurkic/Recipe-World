@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div>
+    <th:block th:replace="fragments/head :: genericHead"></th:block>
+</div>
+<body class="d-flex flex-column min-vh-100 col-md-8 mx-auto">
+<div th:replace="fragments/header :: header"></div>
+
+<div class="col-md-4 mx-auto">
+    <h1 th:text="'Update step ' + ${stepNumber} + '. for \'' + ${recipeName} + '\''" class="text-center"/>
+
+    <form th:action="@{/steps/update}" th:object="${request}" method="post">
+        <input type="hidden" name="recipeName" th:value="${recipeName}">
+        <input type="hidden" name="stepNumber" th:value="${stepNumber}">
+        <div class="mb-3">
+            <label for="descriptionInput" class="form-label">Description</label>
+            <input type="text" th:value="*{description}" class="form-control" id="descriptionInput" th:field="*{description}">
+            <p th:if="${#fields.hasErrors('description')}" th:errorclass="error" th:errors="*{description}"></p>
+        </div>
+        <br><br>
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+</div>
+
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>

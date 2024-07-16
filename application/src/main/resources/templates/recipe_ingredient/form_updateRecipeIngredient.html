@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div><th:block th:replace="fragments/head :: genericHead"></th:block></div>
+
+<body class="d-flex flex-column min-vh-100 col-md-8 mx-auto">
+<div th:replace="fragments/header :: header"></div>
+
+<div class="col-md-4 mx-auto mb-3">
+    <h1 class="text-center" th:text="'Update \'' + ${request.ingredientName} + '\' in \'' + ${recipeName} + '\''"/>
+
+    <form th:action="@{/recipe/ingredients/update}" th:object="${request}" method="post">
+        <input type="hidden" name="recipeName" th:value="${recipeName}"/>
+        <input type="hidden" name="recipeIngredientId" th:value="${id}">
+        <input type="hidden" th:field="*{ingredientName}" th:value="*{ingredientName}">
+        <div class="mb-3">
+            <label for="amountInput" class="form-label">Amount</label>
+            <input type="number" min="0" step="0.01" class="form-control" id="amountInput" th:field="*{amount}" th:value="*{amount}">
+            <p th:if="${#fields.hasErrors('amount')}" th:errorclass="error" th:errors="*{amount}"></p>
+        </div>
+        <div class="mb-3">
+            <label for="unitInput" class="form-label">Unit</label>
+            <select th:field="*{unit}" id="unitInput">
+                <option th:each="tempUnit: ${units}" th:value="${tempUnit}" th:text="${tempUnit}"/>
+            </select>
+        </div>
+        <br><br>
+        <button type="submit" class="btn btn-primary mx-auto">Update</button>
+    </form>
+</div>
+
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>

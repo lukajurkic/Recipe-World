@@ -1,0 +1,27 @@
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0">
+    <!-- Auth settings for remote servers, mirrors and profiles -->
+    <servers>
+        <server>
+            <id>dice-backend-releases</id>
+            <configuration>
+                <httpHeaders>
+                    <property>
+                        <name>Job-Token</name>
+                        <value>${CI_JOB_TOKEN}</value>
+                    </property>
+                </httpHeaders>
+            </configuration>
+        </server>
+        <server>
+            <id>dice-backend-snapshots</id>
+            <configuration>
+                <httpHeaders>
+                    <property>
+                        <name>Job-Token</name>
+                        <value>${CI_JOB_TOKEN}</value>
+                    </property>
+                </httpHeaders>
+            </configuration>
+        </server>
+    </servers>
+</settings>

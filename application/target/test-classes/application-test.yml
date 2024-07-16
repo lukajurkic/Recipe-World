@@ -1,0 +1,19 @@
+spring:
+  datasource:
+    url: jdbc:tc:postgresql:10:///recipes
+    driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
+    username: root
+    password: root
+
+  flyway:
+    clean-disabled: false
+    schemas: recipes
+
+  sql:
+    init:
+      mode: always
+
+  jpa:
+    properties:
+      hibernate:
+        default_schema: recipes

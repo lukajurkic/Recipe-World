@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div><th:block th:replace="fragments/head :: genericHead"></th:block></div>
+
+<body class="d-flex flex-column min-vh-100 col-md-8 mx-auto">
+<div th:replace="fragments/header :: header"></div>
+<div class="col-md-4 mx-auto">
+<h1 th:text="'Please confirm that you want to delete you account.'"/>
+    <p><i>Note: All your recipes and comments will be deleted.</i></p>
+    <form th:action="@{/users/delete}" method="post">
+        <input type="submit" class="btn btn-danger" value="Confirm">
+        <a th:href="@{/users/details}" class="btn btn-secondary">Cancel</a>
+    </form>
+
+</div>
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>

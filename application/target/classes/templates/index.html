@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<div><th:block th:replace="fragments/head :: genericHead"></th:block></div>
+
+<body class="d-flex flex-column min-vh-100 col-md-8 mx-auto">
+<div th:replace="fragments/header :: header"></div>
+<div class="container d-flex align-items-center justify-content-center">
+    <h1>Welcome to the recipe world!</h1>
+</div>
+<div th:replace="fragments/footer :: footer"></div>
+
+</body>
+</html>

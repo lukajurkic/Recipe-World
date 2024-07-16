@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div><th:block th:replace="fragments/head :: genericHead"></th:block></div>
+
+<body class="d-flex flex-column min-vh-100 col-md-8 mx-auto">
+<div th:replace="fragments/header :: header"></div>
+<h1 th:text="${user.username} + '\'s profile'" class="text-center"></h1>
+<p th:text="'Role: ' + ${user.role}" class="text-center"/>
+<h3 class="mt-3">Recipes: </h3>
+<div class="row">
+    <div class="mx-auto">
+        <div class="d-flex align-items-center justify-content-evenly">
+            <div th:each="recipe: ${recipes}">
+                <form th:action="@{/recipes}" method="get">
+                    <input type="submit" name="recipeName" th:value="${recipe.name}" class="link-info link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"/>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<h3 th:text="'Comments: ' + ${comments.size()}" class="mt-3"></h3>
+<div th:each="comment: ${comments}">
+    <h5 th:text="${comment.title} + ' on ' + ${comment.recipeName}"/>
+</div>
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>

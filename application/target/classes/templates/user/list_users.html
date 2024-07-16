@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div><th:block th:replace="fragments/head :: genericHead"></th:block></div>
+
+<body class="d-flex flex-column min-vh-100 col-md-8 mx-auto">
+<div th:replace="fragments/header :: header"></div>
+
+<h1 class="text-center mb-3">User Directory</h1>
+
+<table class="table table-dark table-bordered table-hover">
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Username</th>
+        <th>Role</th>
+        <th th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
+            Upgrade rights
+        </th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr th:each="user : ${users}">
+
+        <td th:text="${user.id}" />
+        <td th:text="${user.username}" />
+        <td th:text="${user.role}" />
+        <td th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')} and ${user.role != 'ADMIN'}">
+            <form th:action="@{/users/upgrade}" method="post">
+                <input type="hidden" name="username" th:value="${user.username}">
+                <button type="submit" class="btn btn-info">Upgrade</button>
+            </form>
+        </td>
+
+    </tr>
+    </tbody>
+</table>
+<div th:replace="fragments/footer :: footer"></div>
+
+</body>
+</html>

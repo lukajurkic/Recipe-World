@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<div><th:block th:replace="fragments/head :: genericHead"></th:block></div>
+
+<body class="d-flex flex-column min-vh-100 col-md-8 mx-auto">
+<div th:replace="fragments/header :: header"></div>
+
+<h1 th:text="${recipe.name}" class="text-center"/>
+<h3>Recipe Info:</h3>
+<p th:text="'Recipe owner: ' + ${recipe.user.username}"/>
+<p th:text="'Ingredients count: ' + ${ingredients.size()}"/>
+<p th:text="'Comments: ' + ${comments.size()}"/>
+<form th:action="@{'/recipes/exportToPdf/' + ${recipe.name}}" method="get">
+    <button type="submit" class="btn btn-primary btn-sm mb-3">Export to Pdf</button>
+</form>
+<br><br>
+
+<h3 class="mt-5">Ingredients:</h3>
+<ul th:each="ingredient : ${ingredients}">
+    <li th:text="${ingredient.ingredientName} + ' - ' + ${ingredient.amount} + ' ' + ${ingredient.unit}"/>
+</ul>
+
+<h3 class="mt-5">Steps:</h3>
+<ul class="list-group-flush" th:each="step : ${steps}">
+    <li class="list-group-item" th:text="${step.number} + '. ' + ${step.description}"/>
+</ul>
+
+<h3 class="mt-5">Image gallery:</h3>
+<div class="row">
+    <div th:each="image: ${images}" class="col-lg-4 col-md-4 col-xs-4 thumb" style="max-width: 300px">
+        <a class="thumbnail" href="#">
+            <img class="mw-100 h-auto img-responsive" th:src="@{'data:image/jpeg;charset=utf-8;base64,' + ${image}}" alt="">
+        </a>
+
+    </div>
+</div>
+
+
+<br><br>
+
+<h3 class="mt-5 mb-2">Comments:</h3>
+<div th:each="comment: ${userComments}">
+    <div class="d-flex justify-content-between align-items-center">
+        <h5 th:text="${comment.title}"/>
+        <div class="d-flex flex-row justify-content-between align-items-center">
+            <form action="#" th:action="@{/comments/delete}" method="post">
+                <input type="hidden" name="recipeName" th:value="${recipe.name}">
+                <input type="hidden" name="commentId" th:value="${comment.id}">
+                <button type="submit" class="btn btn-link text-muted">Delete</button>
+            </form>
+            <form th:action="@{/comments/update}" method="get">
+                <input type="hidden" name="recipeName" th:value="${recipe.name}">
+                <input type="hidden" name="commentId" th:value="${comment.id}">
+                <button type="submit" class="btn btn-link text-muted">Edit</button>
+            </form>
+        </div>
+    </div>
+    <p th:text="${comment.text}"/>
+    <hr>
+</div>
+<div th:each="comment: ${comments}">
+    <div class="d-flex justify-content-between align-items-center">
+        <h5 th:text="${comment.title}"/>
+        <p class="text-muted" th:text="${comment.username}"/>
+    </div>
+    <p th:text="${comment.text}"/>
+    <hr>
+</div>
+
+<br>
+<div th:if="${#authorization.expression('isAuthenticated()')}">
+    <form th:action="@{/comments/new}" method="get">
+        <input type="hidden" name="recipeName" th:value="${recipe.name}"/>
+        <input type="submit" value="Comment" class="btn btn-primary btn-sm mb-3">
+    </form>
+</div>
+
+<div th:replace="fragments/footer :: footer"></div>
+
+</body>
+</html>

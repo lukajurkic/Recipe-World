@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div><th:block th:replace="fragments/head :: genericHead"></th:block></div>
+
+<body class="d-flex flex-column min-vh-100 col-md-8 mx-auto">
+<div th:replace="fragments/header :: header"></div>
+<div class="col-md-4 mx-auto">
+  <p class="h4 mb-4" th:text="'Write Comment on ' + ${recipeName}"></p>
+  <form th:action="@{/comments/update}" th:object="${request}" method="post">
+    <input type="hidden" name="recipeName" th:value="${recipeName}">
+    <input type="hidden" name="commentId" th:value="${commentId}">
+    <p th:if="${#fields.hasErrors('recipeName')}" th:errorclass="error" th:errors="*{recipeName}"></p>
+    <div class="mb-3">
+      <label for="titleInput" class="form-label">Title</label>
+      <input type="text" class="form-control" id="titleInput" th:field="*{title}">
+      <p th:if="${#fields.hasErrors('title')}" th:errorclass="error" th:errors="*{title}"></p>
+    </div>
+    <div class="mb-3">
+      <label for="textInput" class="form-label">Text</label>
+      <input type="text" class="form-control" id="textInput" th:field="*{text}">
+      <p th:if="${#fields.hasErrors('text')}" th:errorclass="error" th:errors="*{text}"></p>
+    </div>
+    <button type="submit" class="btn btn-primary mx-auto">Save</button>
+  </form>
+</div>
+
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>

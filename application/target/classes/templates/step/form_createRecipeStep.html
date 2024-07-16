@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div>
+    <th:block th:replace="fragments/head :: genericHead"></th:block>
+</div>
+<body class="d-flex flex-column min-vh-100 col-md-8 mx-auto">
+<div th:replace="fragments/header :: header"></div>
+<h1 th:text="'Add step to \'' + ${recipeName} + '\''" class="text-center"/>
+
+<div class="col-md-4 mx-auto">
+    <form action="#" th:action="@{/steps/create}" th:object="${request}" method="post">
+        <input type="hidden" name="recipeName" th:value="${recipeName}">
+        <div class="mb-3">
+            <label for="descriptionInput" class="form-label">Description</label>
+            <input type="text" class="form-control" id="descriptionInput" th:field="*{description}">
+            <p th:if="${#fields.hasErrors('description')}" th:errorclass="error" th:errors="*{description}"></p>
+
+        </div>
+        <br><br>
+            <button type="submit" class="btn btn-primary">Add Step</button>
+    </form>
+    <br>
+    <form th:action="@{/recipes/addIngredient}" method="post">
+        <input type="hidden" name="recipeName" th:value="${recipeName}">
+        <input type="submit" value="Add Ingredient" class="btn btn-primary"/>
+    </form>
+    <br>
+    <form th:action="@{/recipes/all}" method="get">
+        <input type="submit" value="See all recipes" class="btn btn-primary"/>
+    </form>
+</div>
+
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>

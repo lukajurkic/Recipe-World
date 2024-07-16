@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div>
+    <th:block th:replace="fragments/head :: genericHead"></th:block>
+</div>
+
+<body class="d-flex flex-column min-vh-100 col-md-8 mx-auto">
+<div th:replace="fragments/header :: header"></div>
+<h1 th:text="'Add ingredient to \'' + ${recipeName} + '\''" class="text-center"/>
+
+
+<div class="col-md-4 mx-auto">
+    <div class="mb-3">
+        <label>
+            Filter by Category:
+            <form th:action="@{/recipes/addIngredient}" method="get">
+                <input type="hidden" name="recipeName" th:value="${recipeName}"/>
+                <input type="submit" name="category" value="ALL" class="btn btn-primary btn-sm mb-3">
+                <span th:each="category: ${categories}">
+                <input type="submit" name="category" th:value="${category}" class="btn btn-primary btn-sm mb-3">
+            </span>
+            </form>
+        </label>
+    </div>
+    <form th:action="@{/recipes/addIngredient}" th:object="${recipeIngredientRequest}" method="post">
+        <input type="hidden" name="recipeName" th:value="${recipeName}"/>
+        <div class="mb-3">
+            <label for="ingredientInput" class="form-label">Ingredient</label>
+            <select th:field="*{ingredientName}" id="ingredientInput">
+                <option th:each="ingredient: ${ingredients}" th:value="${ingredient.name}" th:text="${ingredient.name}"/>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="amountInput" class="form-label">Amount</label>
+            <input type="number" min="0" step="0.01" class="form-control" id="amountInput" th:field="*{amount}">
+            <p th:if="${#fields.hasErrors('amount')}" th:errorclass="error" th:errors="*{amount}"></p>
+        </div>
+        <div class="mb-3">
+            <label for="unitInput" class="form-label">Unit</label>
+            <select th:field="*{unit}" id="unitInput">
+                <option th:each="tempUnit: ${units}" th:value="${tempUnit}" th:text="${tempUnit}"/>
+            </select>
+        </div>
+        <br><br>
+        <button type="submit" class="btn btn-primary mx-auto">Add Ingredient</button>
+    </form>
+    <br>
+    <form th:action="@{/steps/new}" method="get">
+        <input type="hidden" name="recipeName" th:value="${recipeName}">
+        <input type="submit" value="Add Step" class="btn btn-primary"/>
+    </form>
+    <br>
+    <form th:action="@{/recipe/ingredients/all}" method="get">
+        <input type="hidden" name="recipeName" th:value="${recipeName}"/>
+        <input type="submit" value="See all ingredients" class="btn btn-primary"/>
+    </form>
+</div>
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>
