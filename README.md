@@ -18,7 +18,7 @@ USER
 - can create and manage recipes he created
 - can create ingredients and upload images
 - can comment and export recipes
-- 
+  
 ADMIN
 - can do all the things USER can
 - can update, delete and manage images on ingredients.
