@@ -13,10 +13,12 @@ Recipe world app uses another API for importing recipes. User enters a recipe na
 Every user can comment on every recipe, user can edit or delete comments they made. Application implements option for recipes to be exported to .pdf format.
 
 Recipe World web application has two types of users:
+
 USER 
 - can create and manage recipes he created
 - can create ingredients and upload images
 - can comment and export recipes
+- 
 ADMIN
 - can do all the things USER can
 - can update, delete and manage images on ingredients.
